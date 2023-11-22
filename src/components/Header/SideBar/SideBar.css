@@ -1,0 +1,119 @@
+.sidebar {
+  width: 520px;
+  background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transform: translateX(520px);
+  transition: .5s;
+}
+
+.sidebar_opened {
+  transform: translateX(0);
+}
+
+.sidebar__list {
+  list-style-type: none;
+  padding: 0;
+  margin: 106px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar__item {
+  margin: 28px 0;
+}
+
+.sidebar__link {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.21;
+  padding: 0 0 4px;
+}
+
+.sidebar__link:hover {
+  opacity: .7;
+}
+
+.sidebar__link.active {
+  border-bottom: 2px solid #000;
+}
+
+.sidebar__link_account {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.sidebar__account {
+  margin: 621px auto 0;
+}
+
+.sidebar__close {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../../images/close-cross.svg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 22px 22px 0 0;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  align-self: flex-end;
+}
+
+.sidebar__close:hover {
+  opacity: .8;
+}
+
+.sidebar__text {
+  font-size: 14px;
+  line-height: 1.14;
+  font-weight: 500;
+  margin: 0;
+}
+
+.sidebar__logo {
+  background-image: url(../../../images/account.svg);
+  background-size: 12px 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #F5F5F5;
+  width: 26px;
+  height: 30px;
+  border-radius: 15%;
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    transform: translateX(320px);
+  }
+
+  .sidebar_opened {
+    transform: translateX(0);
+  }
+
+  .sidebar__account {
+    margin: 444px auto 0;
+  }
+
+  .sidebar__close {
+    margin: 13px 13px 0 0;
+  }
+
+  .sidebar__list {
+    margin: 100px 0 0;
+  }
+
+  .sidebar__item {
+    margin: 24px 0;
+  }
+
+  .sidebar__link {
+    padding: 0 0 7px;
+  }
+}

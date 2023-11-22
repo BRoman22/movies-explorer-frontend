@@ -1,0 +1,96 @@
+@import url(../../vendor/normalize.css);
+@import url(../../vendor/fonts/fonts.css);
+
+#root,
+#modals {
+  font-family: 'Inter', Arial, sans-serif;
+  text-rendering: optimizeSpeed;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  background-color: #FFF;
+}
+
+.page {
+  margin: auto;
+  min-width: 1140px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.16;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.21;
+  margin: 0;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42;
+  margin: 0;
+}
+
+.title_letter-spacing,
+.subtitle_letter-spacing,
+.text_letter-spacing {
+  letter-spacing: -.04em;
+}
+
+.line {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #000;
+  width: 100%;
+}
+
+.line_place {
+  padding-top: 23px;
+}
+
+@media (max-width: 1139px) {
+  .page {
+    min-width: 320px;
+  }
+
+  .title {
+    font-size: 40px;
+    line-height: 1.25;
+  }
+
+  .text {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 30px;
+    line-height: 1.26;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .line_place {
+    padding-top: 28px;
+  }
+
+  .text {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+}
