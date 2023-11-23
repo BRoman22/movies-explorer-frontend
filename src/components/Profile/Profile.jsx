@@ -36,9 +36,9 @@ export default function Profile() {
 
   return (
     <main className='profile'>
-      <h2 className='profile__title profile__title_place'>
+      <h1 className='profile__title profile__title_place'>
         Привет, {currentUser.name}!
-      </h2>
+      </h1>
       <form className='profile__form' onSubmit={onSubmit} autoComplete='off'>
         <fieldset className='profile__fieldset'>
           <label
@@ -64,7 +64,6 @@ export default function Profile() {
             </span>
           </label>
         </fieldset>
-        <hr className='line line_profile' />
         <fieldset className='profile__fieldset'>
           <label
             className={`profile__label ${
@@ -104,6 +103,7 @@ export default function Profile() {
       {!showSubmitButton && (
         <div className='profile__container'>
           <button
+            type='button'
             className='profile__button profile__button_show-submit-button'
             onClick={toggleShowSubmitButton}
           >

@@ -3,8 +3,7 @@ import './AboutProject.css';
 export default function AboutProject() {
   return (
     <section className='about-project' id='about-project'>
-      <h3 className='subtitle subtitle_letter-spacing'>О проекте</h3>
-      <hr className='line line_place' />
+      <h2 className='subtitle subtitle_letter-spacing'>О проекте</h2>
       <div className='about-project__two-columns'>
         <h3 className='about-project__subtitle about-project__subtitle_one'>
           Дипломный проект включал 5 этапов

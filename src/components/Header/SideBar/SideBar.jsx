@@ -6,6 +6,7 @@ export default function SideBar({ isOpen, handleTogglePopup }) {
   return (
     <div className={`sidebar ${isOpen && 'sidebar_opened'}`}>
       <button
+        type='button'
         aria-label='Закрыть'
         className='sidebar__close'
         onClick={handleTogglePopup}

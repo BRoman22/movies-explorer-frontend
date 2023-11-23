@@ -15,7 +15,6 @@ export default function Portfolio() {
             <p className='portfolio__text'>Статичный сайт</p>
             <span>↗</span>
           </a>
-          <hr className='line line_portfolio' />
         </li>
         <li className='portfolio__item'>
           <a
@@ -27,7 +26,6 @@ export default function Portfolio() {
             <p className='portfolio__text'>Адаптивный сайт</p>
             <span>↗</span>
           </a>
-          <hr className='line line_portfolio' />
         </li>
         <li className='portfolio__item'>
           <a

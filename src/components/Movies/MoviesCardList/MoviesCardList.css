@@ -8,7 +8,9 @@
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 24px;
   row-gap: 30px;
-  padding-bottom: 30px;
+  margin: 0;
+  padding: 0 0 30px;
+  list-style-type: none;
 }
 
 .movies-card-list__more-button {

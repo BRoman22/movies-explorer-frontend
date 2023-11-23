@@ -5,10 +5,9 @@ export default function AboutMe() {
   return (
     <section className='about-me'>
       <h2 className='subtitle subtitle_letter-spacing'>Студент</h2>
-      <hr className='line line_place' />
       <div className='about-me__container'>
-        <h2 className='about-me__title'>Виталий</h2>
-        <h3 className='about-me__subtitle'>Фронтенд-разработчик, 30 лет</h3>
+        <h3 className='about-me__title'>Виталий</h3>
+        <h2 className='about-me__subtitle'>Фронтенд-разработчик, 30 лет</h2>
         <p className='text text_about-me'>
           Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня
           есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом.

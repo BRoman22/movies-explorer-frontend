@@ -15,6 +15,10 @@
   grid-template-columns: 1fr 34px;
 }
 
+.search-form__fieldset_input:focus-within {
+  border-bottom: 1px solid #FF6838;
+}
+
 .search-form__fieldset_checkbox {
   padding-top: 30px;
   display: flex;
@@ -119,7 +123,7 @@
   background-color: #2BE080;
 }
 
-.search-form__checkbox__text {
+.search-form__text {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.28;
@@ -143,7 +147,7 @@
     padding-bottom: 6px;
   }
 
-  .checkbox__text {
+  .search-form__text {
     font-size: 11px;
     line-height: 1.63px;
   }

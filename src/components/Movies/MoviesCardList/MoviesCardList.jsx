@@ -20,13 +20,16 @@ export default function MoviesCardList() {
 
   return (
     <section className='movies-card-list'>
-      <div className='movies-card-list__cards-list'>
+      <ul className='movies-card-list__cards-list'>
         {showCountFromScreen(movies)?.map((movie) => (
           <MoviesCard key={movie.id} movie={movie} />
         ))}
-      </div>
+      </ul>
       {showMoreButton && (
-        <button className='movies-card-list__more-button movies-card-list__more-button_place'>
+        <button
+          type='button'
+          className='movies-card-list__more-button movies-card-list__more-button_place'
+        >
           Ещё
         </button>
       )}

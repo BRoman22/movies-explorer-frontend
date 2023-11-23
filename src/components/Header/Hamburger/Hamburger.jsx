@@ -3,6 +3,7 @@ import './Hamburger.css';
 export default function Hamburger({ handleTogglePopup }) {
   return (
     <button
+      type='button'
       aria-label='Боковое меню'
       className='hamburger'
       onClick={handleTogglePopup}

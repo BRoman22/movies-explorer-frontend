@@ -8,9 +8,9 @@ export default function Form({ onSubmit, children }) {
   return (
     <>
       <form autoComplete='off' className='form form_place' onSubmit={onSubmit}>
-        <h2 className='form__title'>
+        <h1 className='form__title'>
           {registerRoute ? 'Добро пожаловать!' : 'Рады видеть!'}
-        </h2>
+        </h1>
         {children}
       </form>
       <Link

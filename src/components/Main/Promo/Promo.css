@@ -48,7 +48,7 @@
 }
 
 .promo__logo {
-  background-image: url(../../../images/promo-logo.png);
+  background-image: url(../../../images/promo-logo.svg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -30,7 +30,7 @@
   justify-content: center;
 }
 
-.tech__item {
+.techs__item {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.21;
@@ -61,7 +61,7 @@
     padding: 84px 0 0;
   }
 
-  .tech__item {
+  .techs__item {
     font-size: 12px;
     width: 84px;
     height: 57px;

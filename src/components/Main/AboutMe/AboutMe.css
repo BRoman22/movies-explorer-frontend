@@ -66,12 +66,9 @@
   }
 
   .about-me__container {
-    grid-template-columns: 364px 255px;
-    column-gap: 49px;
-  }
-
-  .about-me__container {
     grid-template-rows: 56px 38px 195px 1fr;
+    grid-template-columns: 1fr 255px;
+    column-gap: 49px;
   }
 
   .about-me__title {
