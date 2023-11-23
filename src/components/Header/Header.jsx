@@ -7,7 +7,7 @@ export default function Header({ loggedIn, handleTogglePopup }) {
   const mainRoute = useLocation().pathname === routes.main;
 
   return (
-    <header className={`header ${mainRoute && 'header_theme-blue'}`}>
+    <header className={`header ${mainRoute ? 'header_theme-blue' : ''}`}>
       <Navigation loggedIn={loggedIn} handleTogglePopup={handleTogglePopup} />
     </header>
   );

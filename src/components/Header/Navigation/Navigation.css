@@ -92,7 +92,7 @@
 .navigation__link_account {
   display: flex;
   align-items: center;
-  gap: 17px;
+  justify-content: space-between;
 }
 
 .navigation__link_account:hover {

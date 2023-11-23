@@ -13,7 +13,7 @@ export default function Navigation({ loggedIn, handleTogglePopup }) {
   const notMainRoute = useLocation().pathname !== routes.main;
 
   const navLinkClasslist = `navigation__link navigation__link_movies ${
-    notMainRoute && 'navigation__link_black'
+    notMainRoute ? 'navigation__link_black' : ''
   }`;
 
   const ulClasslist = `navigation__list ${
@@ -46,13 +46,13 @@ export default function Navigation({ loggedIn, handleTogglePopup }) {
                   <Link
                     to={routes.profile}
                     className={`navigation__link navigation__link_account ${
-                      notMainRoute && 'navigation__link_black'
+                      notMainRoute ? 'navigation__link_black' : ''
                     }`}
                   >
                     <h2 className='navigation__text'>Аккаунт</h2>
                     <div
                       className={`navigation__logo ${
-                        notMainRoute && 'navigation__logo_grey'
+                        notMainRoute ? 'navigation__logo_grey' : ''
                       }`}
                     />
                   </Link>

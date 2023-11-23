@@ -60,7 +60,7 @@
   opacity: .7;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .about-me {
     padding: 90px 50px;
   }

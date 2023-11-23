@@ -152,7 +152,7 @@
   color: #EE3465;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .profile__title_place {
     margin: 236px 0 80px;
   }

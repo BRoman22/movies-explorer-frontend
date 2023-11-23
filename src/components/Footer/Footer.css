@@ -52,7 +52,7 @@
   grid-area: text;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .footer {
     padding: 78px 30px 20px;
     background-color: #FFF;

@@ -44,7 +44,7 @@
   justify-content: center;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .techs {
     padding: 90px 50px;
   }

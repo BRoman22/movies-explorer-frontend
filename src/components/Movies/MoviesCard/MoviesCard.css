@@ -68,9 +68,10 @@
   object-fit: cover;
   object-position: center;
   cursor: pointer;
+  overflow: hidden;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .movies-card__image {
     width: 339px;
     height: 190px;

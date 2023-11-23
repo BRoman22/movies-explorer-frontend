@@ -53,7 +53,7 @@
   padding-top: 14px;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .about-project {
     padding: 90px 50px;
   }

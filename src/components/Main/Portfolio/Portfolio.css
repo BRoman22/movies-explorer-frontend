@@ -47,7 +47,7 @@
   line-height: 1.66;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .portfolio {
     padding: 0 50px 82px;
   }

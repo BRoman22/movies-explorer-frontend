@@ -57,7 +57,7 @@
   grid-area: logo;
 }
 
-@media (max-width: 1139px) {
+@media (max-width: 1200px) {
   .promo {
     padding: 140px 30px 76px;
     grid-template-rows: min-content min-content min-content min-content;
