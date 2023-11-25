@@ -1,0 +1,136 @@
+.navigation {
+  width: 100%;
+  height: inherit;
+}
+
+.navigation__list {
+  height: inherit;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: grid;
+  align-items: center;
+}
+
+.navigation__item-movies {
+  margin-left: 45px;
+}
+
+.navigation__item-register {
+  margin-right: 30px;
+}
+
+.navigation__list_auth {
+  grid-template-columns: 38px 114px 1fr 100px;
+}
+
+.navigation__list_no-auth {
+  grid-template-columns: 38px 1fr 76px;
+  justify-items: end;
+}
+
+.navigation__list_hamburger {
+  grid-template-columns: 38px 1fr;
+  justify-items: end;
+}
+
+.navigation__link {
+  text-decoration: none;
+  color: #FFF;
+  display: block;
+}
+
+.navigation__link:hover {
+  opacity: .7;
+}
+
+.navigation__link.active {
+  font-weight: 500;
+}
+
+.navigation__link_black {
+  color: #000;
+}
+
+.navigation__link_movies {
+  font-size: 13px;
+  line-height: 1.38;
+  font-weight: 400;
+}
+
+.navigation__link_sign {
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 500;
+}
+
+.navigation__text {
+  font-size: 14px;
+  line-height: 1.14;
+  font-weight: 500;
+  margin: 0;
+}
+
+.navigation__link_login {
+  display: flex;
+  width: 76px;
+  height: 32px;
+  background-color: #2BE080;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1.33;
+  font-weight: 500;
+  color: #000;
+}
+
+.navigation__link_login:hover {
+  opacity: .8;
+}
+
+.navigation__link_account {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigation__link_account:hover {
+  opacity: .8;
+}
+
+.navigation__logo {
+  background-image: url(../../../images/account.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #2BE080;
+  width: 26px;
+  height: 30px;
+  border-radius: 15%;
+}
+
+.navigation__logo_grey {
+  background-color: #F5F5F5;
+}
+
+@media (max-width: 767px) {
+  .navigation__link_login {
+    width: 54px;
+    height: 26px;
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .navigation__list_no-auth {
+    grid-template-columns: 38px 1fr 54px;
+  }
+
+  .navigation__item-register {
+    margin-right: 14px;
+  }
+
+  .navigation__link_sign {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+}

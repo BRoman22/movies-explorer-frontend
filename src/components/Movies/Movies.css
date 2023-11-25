@@ -1,0 +1,15 @@
+.movies {
+  padding: 0 calc((100% - 1280px + 140px)/2);
+}
+
+@media (max-width: 1200px) {
+  .movies {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .movies {
+    padding: 0 10px;
+  }
+}
