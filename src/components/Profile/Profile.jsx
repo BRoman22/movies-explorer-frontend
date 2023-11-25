@@ -109,7 +109,10 @@ export default function Profile() {
           >
             Редактировать
           </button>
-          <button className='profile__button profile__button_logout'>
+          <button
+            type='button'
+            className='profile__button profile__button_logout'
+          >
             Выйти из аккаунта
           </button>
         </div>
