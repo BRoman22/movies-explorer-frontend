@@ -1,16 +1,23 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
+import useLocationState from '../../hooks/useLocationState';
 import './Form.css';
-import { routes } from '../../utils/constants';
+import { Endpoints } from '../../utils/constants';
 
-export default function Form() {
-  const registerRoute = useLocation().pathname === routes.signup;
+export default function Form({ handleRegister, handleLogin }) {
+  const { registerRoute } = useLocationState();
   const { inputs, errors, isValid, handleChange, resetForm } =
     useFormValidation();
 
   function onSubmit(e) {
     e.preventDefault();
     resetForm();
+    const { name, email, password } = inputs;
+    if (registerRoute) {
+      handleRegister(name, email, password);
+    } else {
+      handleLogin(email, password);
+    }
   }
 
   return (
@@ -27,7 +34,7 @@ export default function Form() {
                 placeholder='Имя'
                 required
                 minLength={2}
-                maxLength={20}
+                maxLength={30}
                 name='name'
                 type='text'
                 className='form__input'
@@ -42,7 +49,6 @@ export default function Form() {
             <input
               required
               placeholder='E-mail'
-              maxLength={20}
               name='email'
               type='email'
               className='form__input'
@@ -59,12 +65,12 @@ export default function Form() {
               minLength={6}
               maxLength={20}
               type='password'
-              name='pass'
+              name='password'
               className='form__input'
-              value={inputs?.pass ?? ''}
+              value={inputs?.password ?? ''}
               onChange={handleChange}
             />
-            <span className='form__error'>{errors.pass}</span>
+            <span className='form__error'>{errors.password}</span>
           </label>
         </fieldset>
         <button
@@ -77,7 +83,7 @@ export default function Form() {
       </form>
       <Link
         className='link'
-        to={registerRoute ? routes.signin : routes.signup}
+        to={registerRoute ? Endpoints.signin : Endpoints.signup}
       >
         {registerRoute ? 'Уже зарегистрированы?' : 'Ещё не зарегистрированы?'}
         <span className='link__text'>

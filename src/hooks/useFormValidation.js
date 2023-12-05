@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { emailRegex } from '../utils/constants.js';
 
 export default function useFormValidation() {
   const [inputs, setInputs] = useState({});
@@ -6,9 +7,23 @@ export default function useFormValidation() {
   const [isValid, setIsValid] = useState(true);
 
   function handleChange(e) {
-    const { name, value } = e.target;
+    const input = e.target;
+    const { name, value } = input;
+
+    if (input.validity.valueMissing) {
+      input.setCustomValidity('Пожалуйста, заполните поле');
+    } else if (input.validity.tooShort && name === 'name') {
+      input.setCustomValidity('Минимум 2 символа');
+    } else if (input.validity.tooShort && name === 'password') {
+      input.setCustomValidity('Минимум 6 символов');
+    } else if (!value.match(emailRegex) && name === 'email') {
+      input.setCustomValidity('Некорректный формат email');
+    } else {
+      input.setCustomValidity('');
+    }
+
     setInputs({ ...inputs, [name]: value });
-    setErrors({ ...errors, [name]: e.target.validationMessage }); //e.target.validationMessage дефолтный метод
+    setErrors({ ...errors, [name]: e.target.validationMessage });
     setIsValid(e.target.closest('form').checkValidity());
   }
 
@@ -37,27 +52,3 @@ export default function useFormValidation() {
     resetSubmitButton,
   };
 }
-
-// function getErrorMessage(name, value) {
-//   let message = null;
-//   if (name === 'name') {
-//     if (!nameRegex.test(value)) return (message = `Введите Имя`);
-//   }
-//   if (name === 'email') {
-//     if (!emailRegex.test(value)) return (message = `Введите коректный Емейл`);
-//   }
-//   if (name === 'pass') {
-//     if (!passRegex.test(value))
-//       return (message = `Минимальная длина 6 симв.`);
-//   }
-//   return message;
-// }
-
-// function resetForm() {
-//   setInputs(newValues);
-//   setErrors(newValues);
-// }
-
-// function resetSubmitButton() {
-//   setIsValid(false);
-// }

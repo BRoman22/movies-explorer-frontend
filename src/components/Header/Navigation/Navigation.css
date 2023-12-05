@@ -38,6 +38,7 @@
   text-decoration: none;
   color: #FFF;
   display: block;
+  width: fit-content;
 }
 
 .navigation__link:hover {
