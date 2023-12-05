@@ -27,6 +27,7 @@ export const MoviesCount = {
 export const LsConfig = {
   allMovies: 'allMovies',
   movies: 'movies',
+  savedMovies: 'savedMovies',
   queryInput: 'queryInput',
   checkboxInput: 'checkboxInput',
   login: 'login',

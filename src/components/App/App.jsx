@@ -21,7 +21,8 @@ import InfoTooltipPopup from '../InfoTooltipPopup/InfoTooltipPopup';
 
 export default function App() {
   const navigate = useNavigate();
-  const { showHeader, showFooter, location, moviesRoute } = useLocationState();
+  const { showHeader, showFooter, location, moviesRoute, savedMoviesRoute } =
+    useLocationState();
   const login = JSON.parse(localStorage.getItem(LsConfig.login));
   const [loggedIn, setLoggedIn] = useState(login);
   const [currentUser, setCurrentUser] = useState(null);
@@ -44,7 +45,13 @@ export default function App() {
         .catch(() => showError(Errors.InternalServerError));
 
       MainApi.getSavedMovies()
-        .then(setSavedMovies)
+        .then((savedMovies) => {
+          localStorage.setItem(
+            LsConfig.savedMovies,
+            JSON.stringify(savedMovies),
+          );
+          setSavedMovies(savedMovies);
+        })
         .catch(() => showError(Errors.InternalServerError));
     }
   }, [loggedIn]);
@@ -59,6 +66,16 @@ export default function App() {
       );
     }
   }, [moviesRoute]);
+
+  useEffect(() => {
+    if (savedMoviesRoute) {
+      setSavedMovies(
+        JSON.parse(localStorage.getItem(LsConfig.savedMovies))
+          ? JSON.parse(localStorage.getItem(LsConfig.savedMovies))
+          : [],
+      );
+    }
+  }, [savedMoviesRoute]);
 
   //auth
   function handleRegister(name, email, password) {
@@ -259,25 +276,23 @@ export default function App() {
 
   //сабмит поискового запроса на странице сохраненных фильмов
   function handleSearchSavedMovies(query, checkbox) {
+    const savedMoviesFromStorage = JSON.parse(
+      localStorage.getItem(LsConfig.savedMovies),
+    );
     setErrorMessage(false);
     if (!query) {
       setSavedMovies([]);
       return setErrorMessage(Errors.badRequest);
     }
 
-    setIsLoading(true);
-    MainApi.getSavedMovies()
-      .then((movies) => {
-        const filteredMovies = filterMovies(movies, query, checkbox);
-        if (filteredMovies.length) return setSavedMovies(filteredMovies);
-        setErrorMessage(Errors.notFound);
-        return setSavedMovies([]);
-      })
-      .catch(() => {
-        setErrorMessage(Errors.searchMovie);
-        setMovies([]);
-      })
-      .finally(() => setIsLoading(false));
+    const filteredMovies = filterMovies(
+      savedMoviesFromStorage,
+      query,
+      checkbox,
+    );
+    if (filteredMovies.length) return setSavedMovies(filteredMovies);
+    setErrorMessage(Errors.notFound);
+    return setSavedMovies([]);
   }
 
   return (
