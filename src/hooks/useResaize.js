@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ScreenWidth } from '../utils/constants.js';
 
 export default function useResaize() {
-  const [width, setWidth] = useState(window.screen.width);
+  const [width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = (event) => setWidth(event.target.innerWidth);
