@@ -21,8 +21,7 @@ import InfoTooltipPopup from '../InfoTooltipPopup/InfoTooltipPopup';
 
 export default function App() {
   const navigate = useNavigate();
-  const { showHeader, showFooter, location, moviesRoute, savedMoviesRoute } =
-    useLocationState();
+  const { showHeader, showFooter, location, moviesRoute } = useLocationState();
   const login = JSON.parse(localStorage.getItem(LsConfig.login));
   const [loggedIn, setLoggedIn] = useState(login);
   const [currentUser, setCurrentUser] = useState(null);
@@ -33,26 +32,26 @@ export default function App() {
   const [savedMovies, setSavedMovies] = useState([]);
 
   //logged
-  function toggleLoggedIn() {
-    setLoggedIn(!loggedIn);
-    localStorage.setItem(LsConfig.login, JSON.stringify(!login));
+  function toggleLoggedIn(state) {
+    setLoggedIn(state);
+    localStorage.setItem(LsConfig.login, JSON.stringify(state));
   }
 
   useEffect(() => {
     if (loggedIn) {
       MainApi.getUserInfo()
-        .then(setCurrentUser)
-        .catch(() => showError(Errors.InternalServerError));
+        .then((userInfo) => {
+          toggleLoggedIn(true);
+          setCurrentUser(userInfo);
+        })
+        .catch(() => {
+          localStorage.clear();
+          toggleLoggedIn(false);
+        });
 
       MainApi.getSavedMovies()
-        .then((savedMovies) => {
-          localStorage.setItem(
-            LsConfig.savedMovies,
-            JSON.stringify(savedMovies),
-          );
-          setSavedMovies(savedMovies);
-        })
-        .catch(() => showError(Errors.InternalServerError));
+        .then((savedMovies) => setSavedMovies(savedMovies))
+        .catch(() => setSavedMovies([]));
     }
   }, [loggedIn]);
 
@@ -66,16 +65,6 @@ export default function App() {
       );
     }
   }, [moviesRoute]);
-
-  useEffect(() => {
-    if (savedMoviesRoute) {
-      setSavedMovies(
-        JSON.parse(localStorage.getItem(LsConfig.savedMovies))
-          ? JSON.parse(localStorage.getItem(LsConfig.savedMovies))
-          : [],
-      );
-    }
-  }, [savedMoviesRoute]);
 
   //auth
   function handleRegister(name, email, password) {
@@ -92,7 +81,7 @@ export default function App() {
   function handleLogin(email, password) {
     MainApi.login({ email, password })
       .then(() => {
-        toggleLoggedIn();
+        toggleLoggedIn(true);
         navigate(Endpoints.movies, { replace: true });
       })
       .catch((err) => {
@@ -107,9 +96,7 @@ export default function App() {
     MainApi.logout()
       .then(() => {
         localStorage.clear();
-        setMovies([]);
-        setSavedMovies([]);
-        toggleLoggedIn();
+        toggleLoggedIn(false);
       })
       .catch(() => showError(Errors.InternalServerError));
   }
@@ -120,9 +107,9 @@ export default function App() {
   }, [location]);
 
   //показываем ошибку в попапе
-  function showError(err) {
+  function showError(text) {
     setPopups({ ...popups, infoTooltip: true });
-    setErrorMessage(err);
+    setErrorMessage(text);
   }
 
   //апдейт массивов фильмов
@@ -177,7 +164,10 @@ export default function App() {
   //обновляем профиль юзера
   function handleUpdateUser(name, email) {
     MainApi.updateUserInfo({ name, email })
-      .then(setCurrentUser)
+      .then((userInfo) => {
+        showError(Errors.success);
+        setCurrentUser(userInfo);
+      })
       .catch(() => showError(Errors.updateProfile));
   }
 
@@ -223,7 +213,6 @@ export default function App() {
   //получаем 100 фильмов
   function getAllMovies() {
     if (!allMovies) {
-      setIsLoading(true);
       return MoviesApi.getAllFilms().then((movies) =>
         Promise.all(MoviesApi.filterMoviesProps(movies)).then(
           (filteredPropsMovies) => {
@@ -244,7 +233,7 @@ export default function App() {
     }
   }
 
-  //сохраняем запрос инпутов в локалСторадж
+  //сохраняем запрос инпутов и фильмы в локалСторадж
   function saveMoviesQuery(items, query, checkbox) {
     localStorage.setItem(LsConfig.queryInput, JSON.stringify(query));
     localStorage.setItem(LsConfig.checkboxInput, JSON.stringify(checkbox));
@@ -253,14 +242,15 @@ export default function App() {
 
   //сабмит поискового запроса на странице фильмов
   function handleSearchMovies(query, checkbox) {
-    setErrorMessage(false);
     if (!query) {
       setMovies([]);
       return setErrorMessage(Errors.badRequest);
     }
 
+    setIsLoading(true);
     getAllMovies()
       .then((films) => {
+        setErrorMessage(false);
         const filteredMovies = filterMovies(films, query, checkbox);
         if (filteredMovies.length) {
           saveMoviesQuery(filteredMovies, query, checkbox);
@@ -276,23 +266,22 @@ export default function App() {
 
   //сабмит поискового запроса на странице сохраненных фильмов
   function handleSearchSavedMovies(query, checkbox) {
-    const savedMoviesFromStorage = JSON.parse(
-      localStorage.getItem(LsConfig.savedMovies),
-    );
-    setErrorMessage(false);
     if (!query) {
       setSavedMovies([]);
       return setErrorMessage(Errors.badRequest);
     }
 
-    const filteredMovies = filterMovies(
-      savedMoviesFromStorage,
-      query,
-      checkbox,
-    );
-    if (filteredMovies.length) return setSavedMovies(filteredMovies);
-    setErrorMessage(Errors.notFound);
-    return setSavedMovies([]);
+    setIsLoading(true);
+    MainApi.getSavedMovies()
+      .then((films) => {
+        setErrorMessage(false);
+        const filteredMovies = filterMovies(films, query, checkbox);
+        if (filteredMovies.length) return setSavedMovies(filteredMovies);
+        setErrorMessage(Errors.notFound);
+        return setSavedMovies([]);
+      })
+      .catch(() => setErrorMessage(Errors.searchMovie))
+      .finally(() => setIsLoading(false));
   }
 
   return (

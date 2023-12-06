@@ -6,10 +6,7 @@ const request = (path, method, data) =>
   fetch(`${ApiUrls.baseUrl}/${path}`, {
     method: method,
     credentials: 'include',
-    headers: {
-      // Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   }).then(checkResponse);
 

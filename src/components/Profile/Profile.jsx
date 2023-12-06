@@ -15,11 +15,11 @@ export default function Profile({ handleSignout, handleUpdateUser }) {
     resetSubmitButton,
   } = useFormValidation();
   const inputsValueSameCurrentUserValue =
-    inputs?.name === currentUser?.name || inputs?.email === currentUser?.email;
+    inputs?.name === currentUser?.name && inputs?.email === currentUser?.email;
 
   useEffect(() => {
     setInputs(currentUser);
-  }, [currentUser, setInputs]);
+  }, [currentUser]);
 
   if (inputsValueSameCurrentUserValue && isValid) {
     resetSubmitButton();

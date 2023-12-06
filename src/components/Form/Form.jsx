@@ -6,12 +6,10 @@ import { Endpoints } from '../../utils/constants';
 
 export default function Form({ handleRegister, handleLogin }) {
   const { registerRoute } = useLocationState();
-  const { inputs, errors, isValid, handleChange, resetForm } =
-    useFormValidation();
+  const { inputs, errors, isValid, handleChange } = useFormValidation();
 
   function onSubmit(e) {
     e.preventDefault();
-    resetForm();
     const { name, email, password } = inputs;
     if (registerRoute) {
       handleRegister(name, email, password);

@@ -27,7 +27,6 @@ export const MoviesCount = {
 export const LsConfig = {
   allMovies: 'allMovies',
   movies: 'movies',
-  savedMovies: 'savedMovies',
   queryInput: 'queryInput',
   checkboxInput: 'checkboxInput',
   login: 'login',
@@ -43,11 +42,12 @@ export const Errors = {
   register: 'При регистрации пользователя произошла ошибка.',
   conflict: 'Пользователь с таким email уже существует.',
   login: 'Вы ввели неправильный логин или пароль.',
+  success: 'Успех',
 };
 
 export const ShortMovie = 40;
 
-export const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+export const EmailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 export const ApiUrls = {
   beatFilm: 'https://api.nomoreparties.co',
@@ -57,5 +57,5 @@ export const ApiUrls = {
 
 export const ScreenWidth = {
   desktopScreen: 1200,
-  mobileScreen: 430,
+  mobileScreen: 650,
 };
