@@ -5,7 +5,7 @@ import { MoviesCount, Endpoints } from '../utils/constants.js';
 
 export default function useAmountMovies(movies) {
   const moviesRoute = useLocation().pathname === Endpoints.movies;
-  const { desktopScreen, mobileScreen } = useResaize();
+  const { desktopScreen, tabletScreen, mobileScreen } = useResaize();
   const [showMoreButton, setShowMoreButton] = useState(false);
   const [amount, setAmount] = useState({});
 
@@ -19,8 +19,15 @@ export default function useAmountMovies(movies) {
               : MoviesCount.desktopScreen.movies,
           more: MoviesCount.desktopScreen.more,
         });
-      }
-      if (mobileScreen) {
+      } else if (tabletScreen) {
+        return setAmount({
+          movies:
+            amount.movies > MoviesCount.tabletScreen.movies
+              ? amount.movies
+              : MoviesCount.tabletScreen.movies,
+          more: MoviesCount.tabletScreen.more,
+        });
+      } else if (mobileScreen) {
         return setAmount({
           movies:
             amount.movies > MoviesCount.mobileScreen.movies
@@ -29,15 +36,8 @@ export default function useAmountMovies(movies) {
           more: MoviesCount.mobileScreen.more,
         });
       }
-      return setAmount({
-        movies:
-          amount.movies > MoviesCount.tabletScreen.movies
-            ? amount.movies
-            : MoviesCount.tabletScreen.movies,
-        more: MoviesCount.tabletScreen.more,
-      });
     }
-  }, [desktopScreen, mobileScreen]);
+  }, [desktopScreen, tabletScreen, mobileScreen]);
 
   useEffect(() => {
     if (moviesRoute) {

@@ -18,13 +18,11 @@ export default function Movies({
       {isLoading ? (
         <Preloader />
       ) : (
-        movies?.length !== 0 && (
-          <MoviesCardList
-            movies={movies}
-            handleSaveMovie={handleSaveMovie}
-            handleUnsaveMovie={handleUnsaveMovie}
-          />
-        )
+        <MoviesCardList
+          movies={movies}
+          handleSaveMovie={handleSaveMovie}
+          handleUnsaveMovie={handleUnsaveMovie}
+        />
       )}
     </main>
   );

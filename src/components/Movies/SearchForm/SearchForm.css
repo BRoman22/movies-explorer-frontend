@@ -63,6 +63,7 @@
   font-weight: 500;
   line-height: 1.21;
   text-align: center;
+  width: 90%;
 }
 
 .search-form__input::placeholder {
@@ -137,13 +138,13 @@
   }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 650px) {
   .search-form {
     padding: 92px 4px 50px;
   }
 
   .search-form__label_input {
-    grid-template-columns: 258px;
+    grid-template-columns: 1fr;
     padding-bottom: 6px;
   }
 
@@ -154,14 +155,11 @@
 
   .search-form__input {
     text-align: start;
+    font-size: 18px;
   }
 
   .search-form__fieldset_checkbox {
     padding-top: 42px;
-  }
-
-  .search-form__input {
-    font-size: 18px;
   }
 
   .search-form__button {
