@@ -51,8 +51,8 @@ export const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 export const API = {
   BEATFILM: 'https://api.nomoreparties.co',
-  // BASE_URL: 'https://api.movies-explorer.nomoredomainsmonster.ru',
-  BASE_URL: 'http://localhost:3001', //dev
+  BASE_URL: 'https://api.movies-explorer.nomoredomainsmonster.ru',
+  // BASE_URL: 'http://localhost:3001', //dev
 };
 
 export const SCREEN_WIDTH = {
