@@ -70,12 +70,14 @@ export default function App() {
     }
   }, [moviesRoute]);
 
-  //устанавливаем сохраненные фильмы
+  //устанавливаем сохраненные фильмы при переходе на страницу сохраненные фильмы
   useEffect(() => {
-    MainApi.getSavedMovies()
-      .then((savedMovies) => setSavedMovies(savedMovies))
-      .catch(() => setSavedMovies([]));
-  }, [savedMoviesRoute]);
+    if (loggedIn && savedMoviesRoute) {
+      MainApi.getSavedMovies()
+        .then(setSavedMovies)
+        .catch(() => setErrorMessage(ERROR.SEARCH_MOVIES));
+    }
+  }, [loggedIn, savedMoviesRoute]);
 
   //auth
   function handleRegister(name, email, password) {
