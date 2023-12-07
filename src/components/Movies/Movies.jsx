@@ -13,7 +13,10 @@ export default function Movies({
 }) {
   return (
     <main className='movies'>
-      <SearchForm handleSearchMovies={handleSearchMovies} />
+      <SearchForm
+        handleSearchMovies={handleSearchMovies}
+        isLoading={isLoading}
+      />
       {errorMessage && <p className='movies__error'>{errorMessage}</p>}
       {isLoading ? (
         <Preloader />

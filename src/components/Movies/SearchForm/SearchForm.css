@@ -64,6 +64,7 @@
   line-height: 1.21;
   text-align: center;
   width: 90%;
+  background-color: #FFF;
 }
 
 .search-form__input::placeholder {

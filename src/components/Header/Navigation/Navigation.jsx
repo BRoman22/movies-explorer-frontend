@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import './Navigation.css';
 import useLocationState from '../../../hooks/useLocationState';
 import useResaize from '../../../hooks/useResaize';
-import { Endpoints } from '../../../utils/constants';
+import { ENDPOINT } from '../../../utils/constants';
 import Hamburger from '../Hamburger/Hamburger';
 import Logo from '../../Logo/Logo';
 
@@ -33,13 +33,13 @@ export default function Navigation({ loggedIn, handleOpenSideBar }) {
             {desktopScreen ? (
               <>
                 <li className='navigation__item navigation__item-movies'>
-                  <NavLink to={Endpoints.movies} className={navLinkClasslist}>
+                  <NavLink to={ENDPOINT.MOVIES} className={navLinkClasslist}>
                     Фильмы
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
-                    to={Endpoints.savedMovies}
+                    to={ENDPOINT.SAVED_MOVIES}
                     className={navLinkClasslist}
                   >
                     Сохранённые фильмы
@@ -47,7 +47,7 @@ export default function Navigation({ loggedIn, handleOpenSideBar }) {
                 </li>
                 <li>
                   <Link
-                    to={Endpoints.profile}
+                    to={ENDPOINT.PROFILE}
                     className={`navigation__link navigation__link_account ${
                       !mainRoute ? 'navigation__link_black' : ''
                     }`}
@@ -73,7 +73,7 @@ export default function Navigation({ loggedIn, handleOpenSideBar }) {
           <>
             <li className='navigation__item navigation__item-register'>
               <Link
-                to={Endpoints.signup}
+                to={ENDPOINT.SIGNUP}
                 className='navigation__link navigation__link_sign'
               >
                 Регистрация
@@ -81,7 +81,7 @@ export default function Navigation({ loggedIn, handleOpenSideBar }) {
             </li>
             <li>
               <Link
-                to={Endpoints.signin}
+                to={ENDPOINT.SIGNIN}
                 className='navigation__link navigation__link_login'
               >
                 Войти

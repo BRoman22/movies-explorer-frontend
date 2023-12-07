@@ -1,9 +1,9 @@
-import { ApiUrls } from './constants.js';
+import { API } from './constants.js';
 
 const checkResponse = (res) => (res.ok ? res.json() : Promise.reject());
 
 export function getAllFilms() {
-  return fetch(`${ApiUrls.beatFilm}/beatfilm-movies`).then(checkResponse);
+  return fetch(`${API.BEATFILM}/beatfilm-movies`).then(checkResponse);
 }
 
 export function filterMoviesProps(items) {
@@ -28,9 +28,9 @@ export function filterMoviesProps(items) {
       nameRU,
       nameEN,
     };
-    filteredMovies.image = `${ApiUrls.beatFilm}${item.image.url}`;
+    filteredMovies.image = `${API.BEATFILM}${item.image.url}`;
     filteredMovies.movieId = item.id;
-    filteredMovies.thumbnail = `${ApiUrls.beatFilm}${item.image.formats.thumbnail.url}`;
+    filteredMovies.thumbnail = `${API.BEATFILM}${item.image.formats.thumbnail.url}`;
     return filteredMovies;
   });
 }

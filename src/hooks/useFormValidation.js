@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { EmailRegex } from '../utils/constants.js';
+import { EMAIL_REGEX } from '../utils/constants.js';
 
 export default function useFormValidation() {
   const [inputs, setInputs] = useState({});
@@ -16,7 +16,7 @@ export default function useFormValidation() {
       input.setCustomValidity('Минимум 2 символа');
     } else if (input.validity.tooShort && name === 'password') {
       input.setCustomValidity('Минимум 6 символов');
-    } else if (!value.match(EmailRegex) && name === 'email') {
+    } else if (!value.match(EMAIL_REGEX) && name === 'email') {
       input.setCustomValidity('Некорректный формат email');
     } else {
       input.setCustomValidity('');

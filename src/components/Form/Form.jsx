@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
 import useLocationState from '../../hooks/useLocationState';
 import './Form.css';
-import { Endpoints } from '../../utils/constants';
+import { ENDPOINT } from '../../utils/constants';
 
-export default function Form({ handleRegister, handleLogin }) {
+export default function Form({ handleRegister, handleLogin, isLoading }) {
   const { registerRoute } = useLocationState();
   const { inputs, errors, isValid, handleChange } = useFormValidation();
 
@@ -38,6 +38,7 @@ export default function Form({ handleRegister, handleLogin }) {
                 className='form__input'
                 value={inputs.name ?? ''}
                 onChange={handleChange}
+                disabled={isLoading}
               />
               <span className='form__error'>{errors.name}</span>
             </label>
@@ -52,6 +53,7 @@ export default function Form({ handleRegister, handleLogin }) {
               className='form__input'
               value={inputs.email ?? ''}
               onChange={handleChange}
+              disabled={isLoading}
             />
             <span className='form__error'>{errors.email}</span>
           </label>
@@ -67,6 +69,7 @@ export default function Form({ handleRegister, handleLogin }) {
               className='form__input'
               value={inputs?.password ?? ''}
               onChange={handleChange}
+              disabled={isLoading}
             />
             <span className='form__error'>{errors.password}</span>
           </label>
@@ -74,14 +77,14 @@ export default function Form({ handleRegister, handleLogin }) {
         <button
           type='submit'
           className='form__button form__button_register'
-          disabled={!isValid}
+          disabled={isLoading || !isValid}
         >
           {registerRoute ? 'Зарегистрироваться' : 'Войти'}
         </button>
       </form>
       <Link
         className='link'
-        to={registerRoute ? Endpoints.signin : Endpoints.signup}
+        to={registerRoute ? ENDPOINT.SIGNIN : ENDPOINT.SIGNUP}
       >
         {registerRoute ? 'Уже зарегистрированы?' : 'Ещё не зарегистрированы?'}
         <span className='link__text'>

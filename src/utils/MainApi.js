@@ -1,9 +1,9 @@
-import { ApiUrls } from './constants.js';
+import { API } from './constants.js';
 
 const checkResponse = (res) => (res.ok ? res.json() : Promise.reject(res));
 
 const request = (path, method, data) =>
-  fetch(`${ApiUrls.baseUrl}/${path}`, {
+  fetch(`${API.BASE_URL}/${path}`, {
     method: method,
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },

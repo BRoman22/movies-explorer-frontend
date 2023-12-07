@@ -1,27 +1,27 @@
 import { useLocation } from 'react-router-dom';
-import { Endpoints } from '../utils/constants.js';
+import { ENDPOINT } from '../utils/constants.js';
 
 export default function useLocationState() {
   const location = useLocation().pathname;
 
   const showHeader =
-    location === Endpoints.main ||
-    location === Endpoints.movies ||
-    location === Endpoints.savedMovies ||
-    location === Endpoints.profile;
+    location === ENDPOINT.MAIN ||
+    location === ENDPOINT.MOVIES ||
+    location === ENDPOINT.SAVED_MOVIES ||
+    location === ENDPOINT.PROFILE;
 
   const showFooter =
-    location === Endpoints.main ||
-    location === Endpoints.movies ||
-    location === Endpoints.savedMovies;
+    location === ENDPOINT.MAIN ||
+    location === ENDPOINT.MOVIES ||
+    location === ENDPOINT.SAVED_MOVIES;
 
-  const mainRoute = location === Endpoints.main;
+  const mainRoute = location === ENDPOINT.MAIN;
 
-  const registerRoute = location === Endpoints.signup;
+  const registerRoute = location === ENDPOINT.SIGNUP;
 
-  const moviesRoute = location === Endpoints.movies;
+  const moviesRoute = location === ENDPOINT.MOVIES;
 
-  const savedMoviesRoute = location === Endpoints.savedMovies;
+  const savedMoviesRoute = location === ENDPOINT.SAVED_MOVIES;
 
   return {
     location,

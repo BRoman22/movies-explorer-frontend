@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import './SideBar.css';
-import { Endpoints } from '../../../utils/constants';
+import { ENDPOINT } from '../../../utils/constants';
 
 export default function SideBar({ isOpen, onClose }) {
   return (
@@ -16,7 +16,7 @@ export default function SideBar({ isOpen, onClose }) {
           <li>
             <NavLink
               className='sidebar__link'
-              to={Endpoints.main}
+              to={ENDPOINT.MAIN}
               onClick={onClose}
             >
               Главная
@@ -25,7 +25,7 @@ export default function SideBar({ isOpen, onClose }) {
           <li className='sidebar__item'>
             <NavLink
               className='sidebar__link'
-              to={Endpoints.movies}
+              to={ENDPOINT.MOVIES}
               onClick={onClose}
             >
               Фильмы
@@ -34,7 +34,7 @@ export default function SideBar({ isOpen, onClose }) {
           <li>
             <NavLink
               className='sidebar__link'
-              to={Endpoints.savedMovies}
+              to={ENDPOINT.SAVED_MOVIES}
               onClick={onClose}
             >
               Сохранённые фильмы
@@ -43,7 +43,7 @@ export default function SideBar({ isOpen, onClose }) {
           <li className='sidebar__account'>
             <NavLink
               className='sidebar__link sidebar__link_account'
-              to={Endpoints.profile}
+              to={ENDPOINT.PROFILE}
               onClick={onClose}
             >
               <h2 className='sidebar__text'>Аккаунт</h2>

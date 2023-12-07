@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ScreenWidth } from '../utils/constants.js';
+import { SCREEN_WIDTH } from '../utils/constants.js';
 
 export default function useResaize() {
   const [width, setWidth] = useState(window.innerWidth);
@@ -12,9 +12,8 @@ export default function useResaize() {
   }, []);
 
   return {
-    desktopScreen: width > ScreenWidth.desktopScreen,
-    tabletScreen:
-      width < ScreenWidth.desktopScreen && width > ScreenWidth.mobileScreen,
-    mobileScreen: width <= ScreenWidth.mobileScreen,
+    desktopScreen: width > SCREEN_WIDTH.DESKTOP_SCREEN,
+    tabletScreen: width < SCREEN_WIDTH.DESKTOP_SCREEN && width > SCREEN_WIDTH.MOBILE_SCREEN,
+    mobileScreen: width <= SCREEN_WIDTH.MOBILE_SCREEN,
   };
 }

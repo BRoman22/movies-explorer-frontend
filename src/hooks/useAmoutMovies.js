@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import useResaize from './useResaize.js';
-import { MoviesCount, Endpoints } from '../utils/constants.js';
+import { MOVIES_COUNT, ENDPOINT } from '../utils/constants.js';
 
 export default function useAmountMovies(movies) {
-  const moviesRoute = useLocation().pathname === Endpoints.movies;
+  const moviesRoute = useLocation().pathname === ENDPOINT.MOVIES;
   const { desktopScreen, tabletScreen, mobileScreen } = useResaize();
   const [showMoreButton, setShowMoreButton] = useState(false);
   const [amount, setAmount] = useState({});
@@ -14,26 +14,26 @@ export default function useAmountMovies(movies) {
       if (desktopScreen) {
         return setAmount({
           movies:
-            amount.movies > MoviesCount.desktopScreen.movies
+            amount.movies > MOVIES_COUNT.DESKTOP_SCREEN.MOVIES
               ? amount.movies
-              : MoviesCount.desktopScreen.movies,
-          more: MoviesCount.desktopScreen.more,
+              : MOVIES_COUNT.DESKTOP_SCREEN.MOVIES,
+          more: MOVIES_COUNT.DESKTOP_SCREEN.MORE,
         });
       } else if (tabletScreen) {
         return setAmount({
           movies:
-            amount.movies > MoviesCount.tabletScreen.movies
+            amount.movies > MOVIES_COUNT.TABLET_SCREEN.MOVIES
               ? amount.movies
-              : MoviesCount.tabletScreen.movies,
-          more: MoviesCount.tabletScreen.more,
+              : MOVIES_COUNT.TABLET_SCREEN.MOVIES,
+          more: MOVIES_COUNT.TABLET_SCREEN.MORE,
         });
       } else if (mobileScreen) {
         return setAmount({
           movies:
-            amount.movies > MoviesCount.mobileScreen.movies
+            amount.movies > MOVIES_COUNT.MOBILE_SCREEN.MOVIES
               ? amount.movies
-              : MoviesCount.mobileScreen.movies,
-          more: MoviesCount.mobileScreen.more,
+              : MOVIES_COUNT.MOBILE_SCREEN.MOVIES,
+          more: MOVIES_COUNT.MOBILE_SCREEN.MORE,
         });
       }
     }

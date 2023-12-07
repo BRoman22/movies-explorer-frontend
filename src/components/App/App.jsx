@@ -2,10 +2,15 @@ import { useState, useEffect } from 'react';
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './App.css';
-import { Endpoints, LsConfig, Errors, ShortMovie } from '../../utils/constants';
 import useLocationState from '../../hooks/useLocationState';
 import * as MainApi from '../../utils/MainApi';
 import * as MoviesApi from '../../utils/MoviesApi';
+import {
+  ENDPOINT,
+  LOCAL_STORAGE_CONFIG,
+  ERROR,
+  SHORT_MOVIE,
+} from '../../utils/constants';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -21,20 +26,23 @@ import InfoTooltipPopup from '../InfoTooltipPopup/InfoTooltipPopup';
 
 export default function App() {
   const navigate = useNavigate();
-  const { showHeader, showFooter, location, moviesRoute } = useLocationState();
-  const login = JSON.parse(localStorage.getItem(LsConfig.login));
+  const { showHeader, showFooter, location, moviesRoute, savedMoviesRoute } =
+    useLocationState();
+  const login = JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONFIG.LOGIN));
   const [loggedIn, setLoggedIn] = useState(login);
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(false);
-  const allMovies = JSON.parse(localStorage.getItem(LsConfig.allMovies));
+  const allMovies = JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_CONFIG.ALL_MOVIES),
+  );
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
 
   //logged
   function toggleLoggedIn(state) {
     setLoggedIn(state);
-    localStorage.setItem(LsConfig.login, JSON.stringify(state));
+    localStorage.setItem(LOCAL_STORAGE_CONFIG.LOGIN, JSON.stringify(state));
   }
 
   useEffect(() => {
@@ -48,10 +56,6 @@ export default function App() {
           localStorage.clear();
           toggleLoggedIn(false);
         });
-
-      MainApi.getSavedMovies()
-        .then((savedMovies) => setSavedMovies(savedMovies))
-        .catch(() => setSavedMovies([]));
     }
   }, [loggedIn]);
 
@@ -59,37 +63,48 @@ export default function App() {
   useEffect(() => {
     if (moviesRoute) {
       setMovies(
-        JSON.parse(localStorage.getItem(LsConfig.movies))
-          ? JSON.parse(localStorage.getItem(LsConfig.movies))
+        JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONFIG.MOVIES))
+          ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONFIG.MOVIES))
           : [],
       );
     }
   }, [moviesRoute]);
 
+  //устанавливаем сохраненные фильмы
+  useEffect(() => {
+    MainApi.getSavedMovies()
+      .then((savedMovies) => setSavedMovies(savedMovies))
+      .catch(() => setSavedMovies([]));
+  }, [savedMoviesRoute]);
+
   //auth
   function handleRegister(name, email, password) {
+    setIsLoading(true);
     MainApi.register({ name, email, password })
       .then(() => handleLogin(email, password))
       .catch((err) => {
         if (err.status === 409) {
-          return showError(Errors.conflict);
+          return showError(ERROR.CONFLICT);
         }
-        return showError(Errors.register);
-      });
+        return showError(ERROR.REGISTER);
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function handleLogin(email, password) {
+    setIsLoading(true);
     MainApi.login({ email, password })
       .then(() => {
         toggleLoggedIn(true);
-        navigate(Endpoints.movies, { replace: true });
+        navigate(ENDPOINT.MOVIES, { replace: true });
       })
       .catch((err) => {
         if (err.status === 401) {
-          return showError(Errors.login);
+          return showError(ERROR.LOGIN);
         }
-        return showError(Errors.InternalServerError);
-      });
+        return showError(ERROR.INTERNAL_SERVER_ERROR);
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function handleSignout() {
@@ -98,7 +113,7 @@ export default function App() {
         localStorage.clear();
         toggleLoggedIn(false);
       })
-      .catch(() => showError(Errors.InternalServerError));
+      .catch(() => showError(ERROR.INTERNAL_SERVER_ERROR));
   }
 
   //при смене страницы, стираем ошибку
@@ -121,12 +136,12 @@ export default function App() {
     }
 
     localStorage.setItem(
-      LsConfig.allMovies,
+      LOCAL_STORAGE_CONFIG.ALL_MOVIES,
       JSON.stringify(changeItemInArr(allMovies, item)),
     );
 
     localStorage.setItem(
-      LsConfig.movies,
+      LOCAL_STORAGE_CONFIG.MOVIES,
       JSON.stringify(changeItemInArr(movies, item)),
     );
 
@@ -147,7 +162,7 @@ export default function App() {
         );
         setSavedMovies(newSavedMovies);
       })
-      .catch(() => showError(Errors.InternalServerError));
+      .catch(() => showError(ERROR.INTERNAL_SERVER_ERROR));
   }
 
   //сохраняем фильм
@@ -158,17 +173,17 @@ export default function App() {
 
         setSavedMovies([...savedMovies, movie]);
       })
-      .catch(() => showError(Errors.InternalServerError));
+      .catch(() => showError(ERROR.INTERNAL_SERVER_ERROR));
   }
 
   //обновляем профиль юзера
   function handleUpdateUser(name, email) {
     MainApi.updateUserInfo({ name, email })
       .then((userInfo) => {
-        showError(Errors.success);
+        showError(ERROR.SUCCESS);
         setCurrentUser(userInfo);
       })
-      .catch(() => showError(Errors.updateProfile));
+      .catch(() => showError(ERROR.UPDATE_PROFILE));
   }
 
   //стейт попапа и хендлеры опен/клоуз
@@ -193,7 +208,7 @@ export default function App() {
       const request = query.toLowerCase();
 
       if (checkbox)
-        return movieNames.includes(request) && movie.duration < ShortMovie;
+        return movieNames.includes(request) && movie.duration < SHORT_MOVIE;
       return movieNames.includes(request);
     });
   }
@@ -221,7 +236,7 @@ export default function App() {
               savedMovies,
             );
             localStorage.setItem(
-              LsConfig.allMovies,
+              LOCAL_STORAGE_CONFIG.ALL_MOVIES,
               JSON.stringify(filteredMovies),
             );
             return filteredMovies;
@@ -235,16 +250,22 @@ export default function App() {
 
   //сохраняем запрос инпутов и фильмы в локалСторадж
   function saveMoviesQuery(items, query, checkbox) {
-    localStorage.setItem(LsConfig.queryInput, JSON.stringify(query));
-    localStorage.setItem(LsConfig.checkboxInput, JSON.stringify(checkbox));
-    localStorage.setItem(LsConfig.movies, JSON.stringify(items));
+    localStorage.setItem(
+      LOCAL_STORAGE_CONFIG.QUERY_INPUT,
+      JSON.stringify(query),
+    );
+    localStorage.setItem(
+      LOCAL_STORAGE_CONFIG.CHECKBOX_INPUT,
+      JSON.stringify(checkbox),
+    );
+    localStorage.setItem(LOCAL_STORAGE_CONFIG.MOVIES, JSON.stringify(items));
   }
 
   //сабмит поискового запроса на странице фильмов
   function handleSearchMovies(query, checkbox) {
     if (!query) {
       setMovies([]);
-      return setErrorMessage(Errors.badRequest);
+      return setErrorMessage(ERROR.BAD_REQUEST);
     }
 
     setIsLoading(true);
@@ -256,11 +277,11 @@ export default function App() {
           saveMoviesQuery(filteredMovies, query, checkbox);
           return setMovies(filteredMovies);
         } else {
-          setErrorMessage(Errors.notFound);
+          setErrorMessage(ERROR.NOT_FOUND);
           return setMovies([]);
         }
       })
-      .catch(() => setErrorMessage(Errors.searchMovie))
+      .catch(() => setErrorMessage(ERROR.SEARCH_MOVIES))
       .finally(() => setIsLoading(false));
   }
 
@@ -268,7 +289,7 @@ export default function App() {
   function handleSearchSavedMovies(query, checkbox) {
     if (!query) {
       setSavedMovies([]);
-      return setErrorMessage(Errors.badRequest);
+      return setErrorMessage(ERROR.BAD_REQUEST);
     }
 
     setIsLoading(true);
@@ -277,10 +298,10 @@ export default function App() {
         setErrorMessage(false);
         const filteredMovies = filterMovies(films, query, checkbox);
         if (filteredMovies.length) return setSavedMovies(filteredMovies);
-        setErrorMessage(Errors.notFound);
+        setErrorMessage(ERROR.NOT_FOUND);
         return setSavedMovies([]);
       })
-      .catch(() => setErrorMessage(Errors.searchMovie))
+      .catch(() => setErrorMessage(ERROR.SEARCH_MOVIES))
       .finally(() => setIsLoading(false));
   }
 
@@ -291,9 +312,9 @@ export default function App() {
           <Header loggedIn={loggedIn} handleOpenSideBar={handleOpenSideBar} />
         )}
         <Routes>
-          <Route exact path={Endpoints.main} Component={Main} />
+          <Route exact path={ENDPOINT.MAIN} Component={Main} />
           <Route
-            path={Endpoints.movies}
+            path={ENDPOINT.MOVIES}
             element={
               <ProtectedRoute
                 loggedIn={loggedIn}
@@ -311,7 +332,7 @@ export default function App() {
             }
           />
           <Route
-            path={Endpoints.savedMovies}
+            path={ENDPOINT.SAVED_MOVIES}
             element={
               <ProtectedRoute
                 loggedIn={loggedIn}
@@ -328,7 +349,7 @@ export default function App() {
             }
           />
           <Route
-            path={Endpoints.profile}
+            path={ENDPOINT.PROFILE}
             element={
               <ProtectedRoute
                 loggedIn={loggedIn}
@@ -342,27 +363,34 @@ export default function App() {
             }
           />
           <Route
-            path={Endpoints.signup}
+            path={ENDPOINT.SIGNUP}
             element={
               <ProtectedRoute
                 loggedIn={!loggedIn}
-                children={<Register handleRegister={handleRegister} />}
+                children={
+                  <Register
+                    handleRegister={handleRegister}
+                    isLoading={isLoading}
+                  />
+                }
               />
             }
           />
           <Route
-            path={Endpoints.signin}
+            path={ENDPOINT.SIGNIN}
             element={
               <ProtectedRoute
                 loggedIn={!loggedIn}
-                children={<Login handleLogin={handleLogin} />}
+                children={
+                  <Login handleLogin={handleLogin} isLoading={isLoading} />
+                }
               />
             }
           />
-          <Route path={Endpoints.notFound} Component={NotFound} />
+          <Route path={ENDPOINT.NOT_FOUND} Component={NotFound} />
           <Route
-            path={Endpoints.any}
-            element={<Navigate to={Endpoints.notFound} replace />}
+            path={ENDPOINT.ANY}
+            element={<Navigate to={ENDPOINT.NOT_FOUND} replace />}
           />
         </Routes>
         {showFooter && <Footer />}

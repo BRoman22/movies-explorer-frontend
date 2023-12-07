@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Logo.css';
-import { Endpoints } from '../../utils/constants';
+import { ENDPOINT } from '../../utils/constants';
 
 export default function Logo() {
-  return <Link aria-label='Главная' className='logo' to={Endpoints.main} />;
+  return <Link aria-label='Главная' className='logo' to={ENDPOINT.MAIN} />;
 }

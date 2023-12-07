@@ -2,24 +2,27 @@ import { useState } from 'react';
 import './SearchForm.css';
 import useResaize from '../../../hooks/useResaize';
 import useLocationState from '../../../hooks/useLocationState';
-import { LsConfig } from '../../../utils/constants';
+import { LOCAL_STORAGE_CONFIG } from '../../../utils/constants';
 
 export default function SearchForm({
   handleSearchMovies,
   handleSearchSavedMovies,
+  isLoading,
 }) {
   const { mobileScreen } = useResaize();
   const { moviesRoute } = useLocationState();
 
   const [queryInput, setQueryInput] = useState(
-    JSON.parse(localStorage.getItem(LsConfig.queryInput)) && moviesRoute
-      ? JSON.parse(localStorage.getItem(LsConfig.queryInput))
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONFIG.QUERY_INPUT)) &&
+      moviesRoute
+      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONFIG.QUERY_INPUT))
       : null,
   );
 
   const [checkboxInput, setCheckboxInput] = useState(
-    JSON.parse(localStorage.getItem(LsConfig.checkboxInput)) && moviesRoute
-      ? JSON.parse(localStorage.getItem(LsConfig.checkboxInput))
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONFIG.CHECKBOX_INPUT)) &&
+      moviesRoute
+      ? JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONFIG.CHECKBOX_INPUT))
       : false,
   );
 
@@ -60,13 +63,15 @@ export default function SearchForm({
               className='search-form__input'
               value={queryInput ?? ''}
               onChange={handleQueryChannge}
+              disabled={isLoading}
             />
           </label>
           <button
             type='submit'
             aria-label='Найти'
             className='search-form__button'
-          ></button>
+            disabled={isLoading}
+          />
         </fieldset>
         <fieldset className='search-form__fieldset search-form__fieldset_checkbox'>
           <label className='search-form__label search-form__label_checkbox'>
@@ -76,6 +81,7 @@ export default function SearchForm({
               className='search-form__checkbox'
               checked={checkboxInput ?? ''}
               onChange={handleCheckboxChange}
+              disabled={isLoading}
             />
             <span className='search-form__text'>Короткометражки</span>
           </label>
