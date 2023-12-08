@@ -1,5 +1,16 @@
 .movies {
   padding: 0 calc((100% - 1280px + 140px)/2);
+  flex-grow: 1;
+}
+
+.movies__error {
+  margin: 0 auto;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.21;
+  text-align: center;
+  width: 90%;
+  color: #FF6838;
 }
 
 @media (max-width: 1200px) {
@@ -11,5 +22,9 @@
 @media (max-width: 767px) {
   .movies {
     padding: 0 10px;
+  }
+
+  .movies__error {
+    font-size: 18px;
   }
 }

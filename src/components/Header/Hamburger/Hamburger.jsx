@@ -1,12 +1,12 @@
 import './Hamburger.css';
 
-export default function Hamburger({ handleTogglePopup }) {
+export default function Hamburger({ handleOpenSideBar }) {
   return (
     <button
       type='button'
       aria-label='Боковое меню'
       className='hamburger'
-      onClick={handleTogglePopup}
+      onClick={handleOpenSideBar}
     >
       <span className='hamburger__line' />
       <span className='hamburger__line' />

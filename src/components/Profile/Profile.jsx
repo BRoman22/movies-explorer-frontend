@@ -3,8 +3,9 @@ import { useState, useEffect, useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 
-export default function Profile() {
+export default function Profile({ handleSignout, handleUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
+  const [showSubmitButton, setShowSubmitButton] = useState(false);
   const {
     inputs,
     setInputs,
@@ -13,31 +14,32 @@ export default function Profile() {
     handleChange,
     resetSubmitButton,
   } = useFormValidation();
-
-  const [showSubmitButton, setShowSubmitButton] = useState(false);
-  function toggleShowSubmitButton() {
-    setShowSubmitButton(!showSubmitButton);
-  }
+  const inputsValueSameCurrentUserValue =
+    inputs?.name === currentUser?.name && inputs?.email === currentUser?.email;
 
   useEffect(() => {
     setInputs(currentUser);
   }, [currentUser]);
 
-  const inputsValueSameCurrentUserValue =
-    inputs.name === currentUser.name || inputs.email === currentUser.email;
   if (inputsValueSameCurrentUserValue && isValid) {
     resetSubmitButton();
   }
 
+  function toggleShowSubmitButton() {
+    setShowSubmitButton(!showSubmitButton);
+  }
+
   function onSubmit(e) {
+    const { name, email } = inputs;
     e.preventDefault();
+    handleUpdateUser(name, email);
     toggleShowSubmitButton();
   }
 
   return (
     <main className='profile'>
       <h1 className='profile__title profile__title_place'>
-        Привет, {currentUser.name}!
+        Привет, {currentUser?.name}!
       </h1>
       <form className='profile__form' onSubmit={onSubmit} autoComplete='off'>
         <fieldset className='profile__fieldset'>
@@ -51,11 +53,11 @@ export default function Profile() {
               required
               placeholder='Имя'
               minLength={2}
-              maxLength={20}
+              maxLength={30}
               name='name'
               type='text'
               className='profile__input'
-              value={inputs.name ?? ''}
+              value={inputs?.name ?? ''}
               onChange={handleChange}
               disabled={!showSubmitButton}
             />
@@ -74,11 +76,10 @@ export default function Profile() {
             <input
               required
               placeholder='E-mail'
-              maxLength={20}
               name='email'
               type='email'
               className='profile__input'
-              value={inputs.email ?? ''}
+              value={inputs?.email ?? ''}
               onChange={handleChange}
               disabled={!showSubmitButton}
             />
@@ -87,9 +88,7 @@ export default function Profile() {
             </span>
           </label>
         </fieldset>
-        <span className='profile__error profile__error_submit'>
-          При обновлении профиля произошла ошибка.
-        </span>
+        <span className='profile__error profile__error_submit'></span>
         {showSubmitButton && (
           <button
             type='submit'
@@ -112,6 +111,7 @@ export default function Profile() {
           <button
             type='button'
             className='profile__button profile__button_logout'
+            onClick={handleSignout}
           >
             Выйти из аккаунта
           </button>

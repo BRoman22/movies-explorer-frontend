@@ -1,12 +1,27 @@
 import './SavedMovies.css';
 import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
+import Preloader from '../Movies/Preloader/Preloader';
 
-export default function SavedMovies() {
+export default function SavedMovies({
+  savedMovies,
+  isLoading,
+  errorMessage,
+  handleUnsaveMovie,
+  handleSearchSavedMovies,
+}) {
   return (
     <main className='saved-movies'>
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm handleSearchSavedMovies={handleSearchSavedMovies} />
+      {errorMessage && <p className='movies__error'>{errorMessage}</p>}
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <MoviesCardList
+          movies={savedMovies}
+          handleUnsaveMovie={handleUnsaveMovie}
+        />
+      )}
     </main>
   );
 }

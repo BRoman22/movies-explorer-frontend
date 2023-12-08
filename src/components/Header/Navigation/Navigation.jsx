@@ -1,25 +1,25 @@
-import { useLocation } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
-
 import './Navigation.css';
+import useLocationState from '../../../hooks/useLocationState';
 import useResaize from '../../../hooks/useResaize';
-import { routes } from '../../../utils/constants';
-
+import { ENDPOINT } from '../../../utils/constants';
 import Hamburger from '../Hamburger/Hamburger';
 import Logo from '../../Logo/Logo';
 
-export default function Navigation({ loggedIn, handleTogglePopup }) {
+export default function Navigation({ loggedIn, handleOpenSideBar }) {
   const { desktopScreen } = useResaize();
-  const notMainRoute = useLocation().pathname !== routes.main;
+  const { mainRoute } = useLocationState();
 
   const navLinkClasslist = `navigation__link navigation__link_movies ${
-    notMainRoute ? 'navigation__link_black' : ''
+    !mainRoute ? 'navigation__link_black' : ''
   }`;
 
   const ulClasslist = `navigation__list ${
-    loggedIn ? 
-    (desktopScreen ? 'navigation__list_auth' : 'navigation__list_hamburger') 
-    : 'navigation__list_no-auth'
+    loggedIn
+      ? desktopScreen
+        ? 'navigation__list_auth'
+        : 'navigation__list_hamburger'
+      : 'navigation__list_no-auth'
   }`;
 
   return (
@@ -33,26 +33,29 @@ export default function Navigation({ loggedIn, handleTogglePopup }) {
             {desktopScreen ? (
               <>
                 <li className='navigation__item navigation__item-movies'>
-                  <NavLink to={routes.movies} className={navLinkClasslist}>
+                  <NavLink to={ENDPOINT.MOVIES} className={navLinkClasslist}>
                     Фильмы
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={routes.savedMovies} className={navLinkClasslist}>
+                  <NavLink
+                    to={ENDPOINT.SAVED_MOVIES}
+                    className={navLinkClasslist}
+                  >
                     Сохранённые фильмы
                   </NavLink>
                 </li>
                 <li>
                   <Link
-                    to={routes.profile}
+                    to={ENDPOINT.PROFILE}
                     className={`navigation__link navigation__link_account ${
-                      notMainRoute ? 'navigation__link_black' : ''
+                      !mainRoute ? 'navigation__link_black' : ''
                     }`}
                   >
                     <h2 className='navigation__text'>Аккаунт</h2>
                     <div
                       className={`navigation__logo ${
-                        notMainRoute ? 'navigation__logo_grey' : ''
+                        !mainRoute ? 'navigation__logo_grey' : ''
                       }`}
                     />
                   </Link>
@@ -61,7 +64,7 @@ export default function Navigation({ loggedIn, handleTogglePopup }) {
             ) : (
               <>
                 <li>
-                  <Hamburger handleTogglePopup={handleTogglePopup} />
+                  <Hamburger handleOpenSideBar={handleOpenSideBar} />
                 </li>
               </>
             )}
@@ -70,7 +73,7 @@ export default function Navigation({ loggedIn, handleTogglePopup }) {
           <>
             <li className='navigation__item navigation__item-register'>
               <Link
-                to={routes.signup}
+                to={ENDPOINT.SIGNUP}
                 className='navigation__link navigation__link_sign'
               >
                 Регистрация
@@ -78,7 +81,7 @@ export default function Navigation({ loggedIn, handleTogglePopup }) {
             </li>
             <li>
               <Link
-                to={routes.signin}
+                to={ENDPOINT.SIGNIN}
                 className='navigation__link navigation__link_login'
               >
                 Войти
