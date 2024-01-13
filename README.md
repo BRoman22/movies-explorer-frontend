@@ -49,15 +49,22 @@
 </details>
 
 <details>
-  <summary>Кастомный хук. В зависимости от разрешения экрана пользователя отрисовывет разное количество карточек.</summary>
+  <summary>Кастомный хук. В зависимости от разрешения экрана пользователя отрисовывает разное количество карточек.</summary>
   <a href="https://movies-explorer.nomoredomainsmonster.ru/">
     <img width="600" src="https://github.com/BRoman22/movies-explorer-frontend/assets/96336622/7d44c482-f8ee-4fdc-becd-52043a8b4a88" alt="Гиф с демонстрацией кастомного хука">
   </a>
 </details>
 
+<details>
+  <summary>Кнопка <b>Еще</b> добавляет дополнительные карточки</summary>
+  <a href="https://movies-explorer.nomoredomainsmonster.ru/">
+    <img width="600" src="https://github.com/BRoman22/movies-explorer-frontend/assets/96336622/2f646ab3-e9a8-4ac9-a6e3-599106aac726" alt="Гиф с демонстрацией кнопки Еще">
+  </a>
+</details>
+
 <h2>4. Ссылки на проект</h2>
 
-* <a href="https://github.com/BRoman22/movies-explorer-api">Репозиторий с `backend` частью проекта</a>
+* <a href="https://github.com/BRoman22/movies-explorer-api">Репозиторий с backend частью проекта</a>
 
 * <a href="https://code.s3.yandex.net/web-developer/static/new-program/web-diploma-criteria-2.0/index.html#js">Чеклист и критерии оценки</a>
 
