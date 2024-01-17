@@ -1,5 +1,9 @@
 <h1 align="center">Проект Movies explorer (frontend часть)</h1>
 
+<div align="center">
+  <img width="400" src="https://github.com/BRoman22/movies-explorer-frontend/assets/96336622/8ea48bcc-8117-407c-a9e8-b1c3e00886cb" alt="главная страница приложения">
+</div>
+
 <h2>1. Описание проекта</h2>
 Сервис, в котором можно найти фильмы по запросу и сохранить в личном кабинете.
 
